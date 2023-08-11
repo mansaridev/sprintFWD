@@ -1,0 +1,26 @@
+<div class="container mt-5 p-4 bg-gradient-primary" style="max-width: 500px;">
+  <div class="card p-4">
+    <header class="text-center mb-4">
+      <% if params[:action] == 'new'%>
+        <h3 class="text-dark">CREATE A TEAM</h3>
+      <% else %>
+        <h3 class="text-dark">UPDATE A TEAM</h3>
+      <% end %>
+    </header>
+    <%= form_for @team, html: { class: "text-center" }, data: { turbo: false } do |f| %>
+      <%= render partial: "shared/errors", locals: { resource: @team } %>
+      <div class="form-group">
+        <%= f.label :name, class: "text-dark" %>
+        <%= f.text_field :name, autofocus: true, required: true, placeholder: "Name", class: "form-control rounded-0" %>
+      </div>
+
+      <div class="form-group">
+        <% if params[:action] == 'new'%>
+          <%= f.submit "Create Team", class: "btn btn-success btn-block rounded-0" %>
+        <% else %>
+          <%= f.submit "Update Team", class: "btn btn-success btn-block rounded-0" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

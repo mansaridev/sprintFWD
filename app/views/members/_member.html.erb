@@ -1,0 +1,10 @@
+<tr>
+    <td><%= member.first_name %></td>
+    <td><%= member.last_name %></td>
+    <td><%= member.city %></td>
+    <td><%= member.state %></td>
+    <td><%= member.country %></td>
+    <td><%= member.team.name %></td>
+    <td><%= link_to "Show", member_path(member), class: "btn btn-primary mr-2" %></td>
+    <td><%= link_to "Edit", member_edit_team_path(member), class: "btn btn-primary mr-2" %></td>
+</tr>

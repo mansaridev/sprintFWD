@@ -1,0 +1,19 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-secondary text-white">
+      <h1>Member Details</h1>
+    </div>
+    <div class="card-body">
+      <p><strong>First Name:</strong> <%= @member.first_name %></p>
+      <p><strong>Last Name:</strong> <%= @member.last_name %></p>
+      <p><strong>City:</strong> <%= @member.city %></p>
+      <p><strong>State:</strong> <%= @member.state %></p>
+      <p><strong>Country:</strong> <%= @member.country %></p>
+      <p><strong>Team:</strong> <%= @member.team.name %></p>
+    </div>
+    <div class="d-flex card-footer">
+      <%= link_to "Edit Member", edit_member_path(@member), class: "btn btn-primary mr-2" %>
+      <%= button_to "Delete", member_path(@member), method: :delete, data: { "turbo-confirm": "Are you sure you want to delete this Member?" }, class: "btn btn-danger" %>
+    </div>
+  </div>
+</div>

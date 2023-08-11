@@ -1,0 +1,12 @@
+<div class="col mb-5">
+    <div class="card d-flex flex-column justify-content-between h-100">
+        <%= link_to team_path(team) do %>
+        <div class="card-body">
+            <h2 class="card-title text-center"><%= team.name %></h2>
+        </div>
+        <% end %>
+        <div class="card-footer bg-secondary text-white">
+            <%= pluralize(team.members.count, "member") %>
+        </div>
+    </div>
+</div>

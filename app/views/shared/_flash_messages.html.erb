@@ -1,0 +1,15 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger m-5" id="flash_message" style="text-align: center;"><%= flash[:alert] %></div>
+<% elsif flash[:success] %>
+  <div class="alert alert-success m-5" id="flash_message" style="text-align: center;"><%= flash[:success] %></div>
+<% end %>
+
+<script>
+  // Get the flash message element
+  var flashMessage = document.getElementById("flash_message");
+
+  // Auto-hide the flash message after 5 seconds
+  setTimeout(function() {
+    flashMessage.style.display = "none";
+  }, 5000);
+</script>

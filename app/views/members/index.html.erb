@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Members</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Team Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'member', collection: @members %>
+    </tbody>
+  </table>
+</div>

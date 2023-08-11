@@ -1,0 +1,46 @@
+<div class="container mt-5 p-4 bg-gradient-primary" style="max-width: 500px;">
+  <div class="card p-4">
+    <header class="text-center mb-4">
+      <% if params[:action] == 'new'%>
+        <h3 class="text-dark">CREATE A MEMBER</h3>
+      <% else %>
+        <h3 class="text-dark">UPDATE A MEMBER</h3>
+      <% end %>
+    </header>
+    <%= form_for [@team, @member], html: { class: "text-center" }, data: { turbo: false } do |f| %>
+      <%= render partial: "shared/errors", locals: { resource: @member } %>
+      <div class="form-group">
+        <%= f.label :first_name, class: "text-dark" %>
+        <%= f.text_field :first_name, autofocus: true, required: true, placeholder: "First Name", class: "form-control rounded-0" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :last_name, class: "text-dark" %>
+        <%= f.text_field :last_name, autofocus: true, required: true, placeholder: "Last Name", class: "form-control rounded-0" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :city, class: "text-dark" %>
+        <%= f.text_field :city, autofocus: true, placeholder: "City", class: "form-control rounded-0" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :state, class: "text-dark" %>
+        <%= f.text_field :state, autofocus: true, placeholder: "State", class: "form-control rounded-0" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :country, class: "text-dark" %>
+        <%= f.text_field :country, autofocus: true, placeholder: "Country", class: "form-control rounded-0" %>
+      </div>
+
+      <div class="form-group">
+        <% if params[:action] == 'new'%>
+          <%= f.submit "Create Member", class: "btn btn-success btn-block rounded-0" %>
+        <% else %>
+          <%= f.submit "Update Member", class: "btn btn-success btn-block rounded-0" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

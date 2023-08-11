@@ -1,0 +1,24 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <%= form_tag(@member, method: :put, class: "form-horizontal") do %>
+            <h2 class="mb-4 text-center">Select new team</h2>
+            <div class="scrollable-radio-buttons" style="overflow-y: auto; max-height: 50vh;">
+              <% Team.all.each do |team| %>
+                <div class="form-check">
+                  <%= radio_button_tag "member[team_id]", team.id, @member.team_id == team.id, class: "form-check-input" %>
+                  <%= label_tag "team_ids_#{team.id}", team.name, class: "form-check-label ml-2" %>
+                </div>
+              <% end %>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+              <%= submit_tag "Update", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

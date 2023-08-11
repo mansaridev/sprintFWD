@@ -1,0 +1,10 @@
+<div class="container py-5">
+  <h1 class="text-center mb-5">All Teams</h1>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+    <%= render partial: 'team', collection: @teams %>
+  </div>
+  <div class="d-flex justify-content-center my-5">
+    <%= paginate @teams, class: 'pagination pagination-lg' %>
+  </div>
+</div>
+

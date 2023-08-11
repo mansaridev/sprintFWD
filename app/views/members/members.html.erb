@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 class='text-center'>Members</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Team Name</th>
+        <th>Show</th>
+        <th>Edit Team</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @members.each do |member| %>
+        <%= render partial: 'member', collection: @members %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center my-5">
+    <%= paginate @members, class: 'pagination pagination-lg' %>
+  </div>
+</div>
