@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :projects do
     member do
       post :add_member
+      get :project_members
     end
   end
 

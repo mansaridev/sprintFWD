@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MembersController < ApplicationController
   before_action :set_member, only: %i[show edit update destroy edit_team]
   before_action :set_team, only: %i[new create index]
@@ -9,14 +7,14 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @members }
+      format.json { render json: @members, each_serializer: MemberSerializer }
     end
   end
 
   def show
     respond_to do |format|
       format.html
-      format.json { render json: @member }
+      format.json { render json: @member, serializer: MemberSerializer }
     end
   end
 
@@ -30,10 +28,10 @@ class MembersController < ApplicationController
     respond_to do |format|
       if @member.save
         format.html do
-          flash[:success] = 'Member created successfully.'
+          flash[:success] = I18n.t('flash.success.member_created')
           redirect_to @member
         end
-        format.json { render json: { message: 'Member created successfully.', member: @member }, status: :created }
+        format.json { render json: { message: I18n.t('flash.success.member_created'), member: @member, serializer: MemberSerializer }, status: :created }
       else
         format.html { render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
@@ -45,10 +43,10 @@ class MembersController < ApplicationController
     respond_to do |format|
       if @member.update(member_params)
         format.html do
-          flash[:success] = 'Member was successfully updated.'
+          flash[:success] = I18n.t('flash.success.member_updated')
           redirect_to @member
         end
-        format.json { render json: @member, status: :ok }
+        format.json { render json: @member, serializer: MemberSerializer, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @member.errors, status: :unprocessable_entity }
@@ -57,17 +55,22 @@ class MembersController < ApplicationController
   end
 
   def destroy
-    @member.destroy
-    respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Member was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  rescue StandardError => e
-    respond_to do |format|
-      format.html do
-        redirect_to root_path, alert: "An error occurred while trying to delete the member: #{e.message}"
+    if @member.destroy
+      respond_to do |format|
+        format.html do
+          flash[:success] = I18n.t('member.member_destroyed')
+          redirect_to root_path
+        end
+        format.json { head :no_content }
       end
-      format.json { render json: { error: e.message }, status: :unprocessable_entity }
+    else
+      respond_to do |format|
+        format.html do
+          flash[:error] = I18n.t('member.member_deletion_failed', error: '')
+          redirect_to root_path
+        end
+        format.json { render json: @member.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -76,7 +79,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @members }
+      format.json { render json: @members, each_serializer: MemberSerializer }
     end
   end
 

@@ -41,7 +41,14 @@ RSpec.describe TeamsController, type: :controller do
         get :show, params: { id: team.id }, format: :json
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to include('application/json')
-        expect(response.body).to eq(team.to_json)
+        expect(response.body).to eq({
+          data: {
+            id: team.id.to_s,
+            type: 'team',
+            attributes: team.attributes.slice('name', 'created_at', 'updated_at'),
+            relationships: { members: { data: [] } }
+          }
+        }.to_json)
       end
     end
   end

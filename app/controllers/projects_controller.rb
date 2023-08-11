@@ -1,21 +1,26 @@
 # frozen_string_literal: true
 
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[show edit update destroy]
+  before_action :set_project, only: %i[show edit update destroy project_members]
 
   def index
     @projects = Project.page(params[:page]).per(8)
 
     respond_to do |format|
       format.html
-      format.json { render json: @projects }
+      format.json { render json: ProjectSerializer.new(@projects) }
     end
+  end
+
+  def project_members
+    @members = @project.members
+    render json: MemberSerializer.new(@members)
   end
 
   def show
     respond_to do |format|
       format.html
-      format.json { render json: @project }
+      format.json { render json: ProjectSerializer.new(@project) }
     end
   end
 
@@ -29,10 +34,10 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         format.html do
-          flash[:success] = 'Project created successfully'
+          flash[:success] = I18n.t('project.created_successfully')
           redirect_to @project
         end
-        format.json { render json: @project, status: :created }
+        format.json { render json: ProjectSerializer.new(@project), status: :created }
       else
         format.html { render 'new' }
         format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -44,13 +49,12 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.update(project_params)
         format.html do
-          flash[:success] = 'Project updated successfully'
+          flash[:success] = I18n.t('project.updated_successfully')
           redirect_to @project
         end
-        format.json { render json: @project, status: :ok }
+        format.json { render json: ProjectSerializer.new(@project), status: :ok }
       else
         format.html do
-          flash[:error] = 'Failed to update project'
           render :edit
         end
         format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -61,9 +65,9 @@ class ProjectsController < ApplicationController
   def destroy
     begin
       @project.destroy
-      flash[:success] = 'Project deleted successfully'
+      flash[:success] = I18n.t('project.deleted_successfully')
     rescue StandardError => e
-      flash[:error] = "Error deleting project: #{e.message}"
+      flash[:error] = I18n.t('project.deletion_error', error: e.message)
     end
     respond_to do |format|
       format.html { redirect_to projects_path }

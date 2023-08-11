@@ -6,17 +6,20 @@ class TeamsController < ApplicationController
 
   def index
     @teams = Team.page(params[:page]).per(8)
+    serialized_data = TeamSerializer.new(@teams).serializable_hash
 
     respond_to do |format|
       format.html
-      format.json { render json: @teams }
+      format.json { render json: serialized_data }
     end
   end
 
   def show
+    serialized_data = TeamSerializer.new(@team).serializable_hash
+
     respond_to do |format|
       format.html
-      format.json { render json: @team }
+      format.json { render json: serialized_data }
     end
   end
 
@@ -27,14 +30,18 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
 
-    respond_to do |format|
-      if @team.save
+    if @team.save
+      serialized_data = TeamSerializer.new(@team).serializable_hash
+
+      respond_to do |format|
         format.html do
-          flash[:success] = 'Team created successfully.'
+          flash[:success] = I18n.t('team.created_success')
           redirect_to @team
         end
-        format.json { render json: @team, status: :created }
-      else
+        format.json { render json: serialized_data, status: :created }
+      end
+    else
+      respond_to do |format|
         format.html { render 'new' }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
@@ -42,14 +49,18 @@ class TeamsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @team.update(team_params)
+    if @team.update(team_params)
+      serialized_data = TeamSerializer.new(@team).serializable_hash
+
+      respond_to do |format|
         format.html do
-          flash[:success] = 'Team updated successfully.'
+          flash[:success] = I18n.t('team.updated_success')
           redirect_to @team
         end
-        format.json { render json: @team }
-      else
+        format.json { render json: serialized_data }
+      end
+    else
+      respond_to do |format|
         format.html { render 'edit' }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
@@ -57,16 +68,18 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    respond_to do |format|
-      if @team.destroy
+    if @team.destroy
+      respond_to do |format|
         format.html do
-          flash[:success] = 'Team deleted successfully.'
+          flash[:success] = I18n.t('team.deleted_success')
           redirect_to teams_path
         end
         format.json { head :no_content }
-      else
+      end
+    else
+      respond_to do |format|
         format.html do
-          flash[:error] = 'Team not deleted successfully.'
+          flash[:error] = I18n.t('team.deleted_error', error: '')
           redirect_to teams_path
         end
         format.json { render json: @team.errors, status: :unprocessable_entity }

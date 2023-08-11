@@ -168,18 +168,30 @@ RSpec.describe MembersController, type: :controller do
     end
   end
 
-  describe '#destroy' do
-    it 'destroys the member and redirects to the root page' do
-      delete :destroy, params: { id: member.id }
+  describe "#destroy" do
+    context "when the member is successfully destroyed" do
+      it "redirects to the root path with a success message" do
+        delete :destroy, params: { id: member.id }
+        expect(response).to redirect_to(root_path)
+        expect(flash[:success]).to eq(I18n.t('member.member_destroyed'))
+      end
 
-      expect(response).to redirect_to(root_path)
-      expect(flash[:notice]).to eq('Member was successfully destroyed.')
+      it "returns a 204 status code when requesting JSON" do
+        delete :destroy, params: { id: member.id }, format: :json
+        expect(response.status).to eq(204)
+      end
     end
 
-    it 'returns a no content response in JSON format' do
-      delete :destroy, params: { id: member.id, format: 'json' }
+    context "when the member cannot be destroyed" do
+      before do
+        allow_any_instance_of(Member).to receive(:destroy).and_return(false)
+      end
 
-      expect(response).to have_http_status(:no_content)
+      it "redirects to the root path with an error message" do
+        delete :destroy, params: { id: member.id }
+        expect(response).to redirect_to(root_path)
+        expect(flash[:error]).to eq(I18n.t('member.member_deletion_failed'))
+      end
     end
   end
 

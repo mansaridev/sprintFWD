@@ -46,7 +46,22 @@ RSpec.describe ProjectsController, type: :controller do
       it 'returns the project as JSON' do
         get :show, format: :json, params: { id: project.id }
         expect(response.content_type).to include('application/json')
-        expect(response.body).to eq(project.to_json)
+        expect(response.body).to eq({
+          data: {
+            id: project.id.to_s,
+            type: 'project',
+            attributes: {
+              id: project.id,
+              name: project.name
+            },
+            relationships: {
+              members: {
+                data: []
+              }
+            }
+          }
+        }.to_json)
+
       end
     end
   end

@@ -12,6 +12,7 @@ gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'byebug'
 gem 'kaminari'
+gem 'fast_jsonapi'
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
