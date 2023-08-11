@@ -1,24 +1,57 @@
-# README
+**SprintFWD - Ruby on Rails Project**
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The task is to develop a web application using the Ruby on Rails framework that will enable users to manage team members and their projects. This application will allow users to create teams, add team members, assign projects, track project progress, and generate reports. The app can be designed to have features such as user authentication, CRUD (create, read, update, delete) operations for team members and projects, and data visualization tools to display project progress.
 
-Things you may want to cover:
 
-* Ruby version
 
-* System dependencies
+**Requirements**
 
-* Configuration
+To run this project, you will need to have the following installed on your system:
 
-* Database creation
+Ruby (version 3.0.0)
 
-* Database initialization
+Ruby on Rails (version 7.0.4)
 
-* How to run the test suite
+PostgreSQL (version 14.0 or higher)
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
 
-* ...
+**Getting Started**
+
+To get started with this project, follow the steps below:
+
+
+Clone the project repository to your local machine.
+
+https://github.com/Afeef-Z/sprintFWD.git
+
+
+Navigate to the project directory using the command line.
+
+Run `bundle install` to install the required gems.
+
+Create a new PostgreSQL database by running `rails db:create`
+
+Run the database migrations by running rails `db:migrate`
+
+Populate Database with csv data
+
+`rails db:seed`
+
+Run `rails server` to start the development server.
+
+Once the server is running, you can navigate to http:localhost:3000 to start.
+
+
+
+**Testing**
+
+This project includes unit tests for the backend. To run the tests, simply execute the following command:
+
+`bundle exec rspec`
+
+
+
+**Contributing**
+
+This project is part of a technical interview process and is not open for contributions at this time.
